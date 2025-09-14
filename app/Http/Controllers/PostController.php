@@ -2,6 +2,7 @@
 
     namespace App\Http\Controllers;
 
+    use App\Http\Resources\PostResource;
     use App\Models\Post;
     use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@
             $posts = Post::with('user', 'comments')->latest()->get();
 
             return inertia('Posts/Index', [
-                'posts' => $posts
+                'posts' => PostResource::collection($posts),
             ]);
         }
 
@@ -50,7 +51,7 @@
             $post->load('user', 'comments.user');
 
             return inertia('Posts/Show', [
-                'post' => $post
+                'post' => (new PostResource($post))->resolve(),
             ]);
         }
 
