@@ -1,10 +1,15 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3'
-defineProps({ post: Object })
-const form = useForm({ title: post.title, content: post.content })
+
+const props = defineProps({ post: Object })
+
+const form = useForm({
+    title: props.post.title,
+    content: props.post.content,
+})
 
 function submit() {
-    form.put(`/posts/${post.id}`)
+    form.put(`/posts/${props.post.id}`)
 }
 </script>
 

@@ -1,6 +1,6 @@
 <script setup>
-import { Link } from '@inertiajs/vue3'
-defineProps({ posts: Array })
+import {Link} from '@inertiajs/vue3'
+defineProps({posts: Object})
 </script>
 
 <template>
@@ -12,11 +12,22 @@ defineProps({ posts: Array })
         </div>
 
         <ul class="space-y-4">
-            <li v-for="post in posts" :key="post.id" class="p-4 border rounded shadow">
+            <li v-for="post in posts.data" :key="post.id" class="p-4 border rounded shadow">
                 <h2 class="text-xl font-semibold">{{ post.title }}</h2>
-                <p class="text-gray-600">by {{ post.user.name }}</p>
+                <p class="text-gray-600">by {{ post.user ? post.user.name : 'Guest' }}</p>
                 <p class="mt-2 line-clamp-3">{{ post.content }}</p>
                 <Link :href="`/posts/${post.id}`" class="text-indigo-600 mt-2 block hover:text-indigo-700 hover:underline">Read more</Link>
+
+                <div v-if="post.can?.update || post.can?.delete" class="flex space-x-2 mt-2">
+                    <Link v-if="post.can?.update" :href="`/posts/${post.id}/edit`" class="bg-yellow-500 text-white px-2 py-1 rounded">
+                        Edit
+                    </Link>
+
+                    <Link v-if="post.can?.delete" as="button" method="delete" :href="`/posts/${post.id}`"
+                          class="bg-red-600 text-white px-2 py-1 rounded">
+                        Delete
+                    </Link>
+                </div>
             </li>
         </ul>
     </div>
