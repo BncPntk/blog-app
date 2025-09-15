@@ -14,6 +14,12 @@ class SampleDataSeeder extends Seeder
      */
     public function run(): void
     {
+
+        User::query()->firstOrCreate(
+            ['email' => 'admin@admin.com'],
+            ['name' => 'admin', 'password' => 'admin', 'role' => 'admin']
+        );
+
         $users = User::factory()->count(3)->create();
 
         $users->each(function (User $u) {

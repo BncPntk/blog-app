@@ -1,5 +1,8 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3'
+import SiteLayout from '@/Layouts/SiteLayout.vue'
+defineOptions({ layout: SiteLayout })
+
 const form = useForm({ title: '', content: '' })
 
 function submit() {

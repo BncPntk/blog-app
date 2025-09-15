@@ -1,6 +1,8 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import SiteLayout from '@/Layouts/SiteLayout.vue'
+defineOptions({ layout: SiteLayout })
 </script>
 
 <template>

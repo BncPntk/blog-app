@@ -1,5 +1,7 @@
 <script setup>
 import { Link, useForm, router } from '@inertiajs/vue3'
+import SiteLayout from '@/Layouts/SiteLayout.vue'
+defineOptions({ layout: SiteLayout })
 
 const { post } = defineProps({ post: Object })
 const form = useForm({ comment: '' })
