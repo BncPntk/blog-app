@@ -5,6 +5,8 @@
 ```bash
 # copy env and boot containers
 cp .env.example .env
+docker run --rm -it -v $(pwd):/app -w /app laravelsail/php84-composer sh
+composer install
 ./vendor/bin/sail up -d
 
 # migrations + seeders
@@ -13,7 +15,7 @@ cp .env.example .env
 
 #  frontend
 ./vendor/bin/sail npm install
-./vendor/bin/sail npm run de
+./vendor/bin/sail npm run dev
 ```
 #### Admin user:
 Email: admin@admin.com
