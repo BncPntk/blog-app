@@ -7,14 +7,6 @@
     use Illuminate\Support\Facades\Route;
     use Inertia\Inertia;
 
-    Route::get('/', function () {
-        return Inertia::render('Welcome', [
-            'canLogin' => Route::has('login'),
-            'canRegister' => Route::has('register'),
-            'laravelVersion' => Application::VERSION,
-            'phpVersion' => PHP_VERSION,
-        ]);
-    });
 
     Route::get('/dashboard', function () {
         return Inertia::render('Dashboard');
@@ -31,9 +23,11 @@
 
     Route::get('/', [PostController::class, 'index'])->name('home');
 
+    Route::resource('posts', PostController::class)->only(['index', 'show']);
 
-    Route::middleware(['auth'])->group(function () {
-        Route::resource('posts', PostController::class);
+    Route::middleware('auth')->group(function () {
+        Route::resource('posts', PostController::class)->except(['index', 'show']);
         Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
     });
     Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
+

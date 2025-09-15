@@ -1,6 +1,11 @@
 <script setup>
-import {Link} from '@inertiajs/vue3'
-defineProps({posts: Object})
+import {Link, usePage} from '@inertiajs/vue3'
+import {computed} from 'vue'
+
+const {posts} = defineProps({posts: Object})
+
+const page = usePage()
+const isLoggedIn = computed(() => !!page.props.auth?.user)
 </script>
 
 <template>
@@ -8,7 +13,16 @@ defineProps({posts: Object})
         <h1 class="text-2xl font-bold mb-4">All Posts</h1>
 
         <div class="mb-4">
-            <Link href="/posts/create" class="bg-indigo-600 text-white px-3 py-2 rounded hover:bg-indigo-700">New Post</Link>
+            <Link v-if="isLoggedIn"
+                  href="/posts/create"
+                  class="bg-indigo-600 text-white px-3 py-2 rounded hover:bg-indigo-700">
+                New Post
+            </Link>
+
+            <div v-else class="flex gap-2">
+                <Link href="/login" class="px-3 py-2 border rounded">Log in to post</Link>
+                <Link href="/register" class="px-3 py-2 border rounded">Register</Link>
+            </div>
         </div>
 
         <ul class="space-y-4">
