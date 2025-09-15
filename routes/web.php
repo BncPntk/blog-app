@@ -23,11 +23,12 @@
 
     Route::get('/', [PostController::class, 'index'])->name('home');
 
-    Route::resource('posts', PostController::class)->only(['index', 'show']);
-
     Route::middleware('auth')->group(function () {
         Route::resource('posts', PostController::class)->except(['index', 'show']);
     });
+
+    Route::resource('posts', PostController::class)->only(['index', 'show']);
+
     Route::post('/posts/{post}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::delete('/comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
 
