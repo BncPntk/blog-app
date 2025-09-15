@@ -15,16 +15,16 @@ class PostResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'      => $this->id,
-            'title'   => $this->title,
+            'id' => $this->id,
+            'title' => $this->title,
             'content' => $this->content,
-            'user'    => $this->whenLoaded('user', fn () => $this->user),
+            'user' => $this->whenLoaded('user', fn () => $this->user),
             'comments' => $this->whenLoaded(
                 'comments',
                 fn () => CommentResource::collection($this->comments)->resolve(),
                 []
             ),
-            'can'     => [
+            'can' => [
                 'update' => $request->user()?->can('update', $this->resource),
                 'delete' => $request->user()?->can('delete', $this->resource),
             ],
