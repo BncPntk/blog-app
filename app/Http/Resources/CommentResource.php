@@ -19,7 +19,7 @@ class CommentResource extends JsonResource
             'comment' => $this->comment,
             'user'    => $this->whenLoaded('user', fn () => $this->user),
             'can'     => [
-                'delete' => $request->user()?->can('delete', $this->resource),
+                'delete' => ($request->user()?->can('delete', $this->resource)) || ($request->session()->get('guest_key') === $this->guest_key),
             ],
         ];
     }
